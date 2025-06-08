@@ -1,26 +1,33 @@
-# 🚀 Taller Funciones 2
+# 🗄️ Taller Funciones SQL 2
 
-Un taller práctico e interactivo sobre funciones en JavaScript, diseñado para ayudar a desarrolladores principiantes a dominar conceptos fundamentales de programación.
+Un taller práctico sobre funciones y procedimientos almacenados en SQL, enfocado en el manejo de bases de datos relacionales con ejemplos de países y clientes de América del Sur.
+
+## 📊 Base de Datos
+
+Este proyecto incluye un sistema de gestión de clientes por países con:
+
+- **Tabla `pais`**: Información de países sudamericanos (Argentina, Brasil, Chile, Colombia, Perú)
+- **Tabla `cliente`**: Datos de clientes asociados a cada país
+- **Relación**: Foreign Key entre cliente y país
 
 ## 🛠️ Tecnologías Utilizadas
 
-- **HTML5** - Estructura del contenido
-- **CSS3** - Estilos y diseño responsivo
-- **JavaScript** - Lógica e interactividad
-- **Git** - Control de versiones
+- **MySQL/MariaDB** - Sistema de gestión de base de datos
+- **SQL** - Lenguaje de consultas estructuradas
+- **Procedimientos Almacenados** - Funciones automatizadas
 
 ## 📁 Estructura del Proyecto
 
 ```
 Taller-Funciones2/
-├── index.html          # Página principal
-├── css/
-│   └── styles.css      # Estilos personalizados
-├── js/
-│   └── functions.js    # Lógica de las funciones
-├── assets/
-│   └── images/         # Imágenes del proyecto
-└── README.md           # Este archivo
+├── database.sql        # Script principal con todas las consultas
+├── schema/
+│   ├── tables.sql     # Creación de tablas
+│   └── data.sql       # Inserción de datos
+├── queries/
+│   ├── basic.sql      # Consultas básicas
+│   └── advanced.sql   # Consultas avanzadas
+└── README.md          # Este archivo
 ```
 
 ## 🚀 Cómo Empezar
@@ -30,56 +37,90 @@ Taller-Funciones2/
    git clone https://github.com/pabloWIB/Taller-Funciones2.git
    ```
 
-2. **Navega al directorio**
-   ```bash
-   cd Taller-Funciones2
+2. **Configura tu base de datos**
+   - Instala MySQL/MariaDB
+   - Crea una nueva base de datos: `CREATE DATABASE taller_funciones;`
+
+3. **Ejecuta el script**
+   ```sql
+   USE taller_funciones;
+   SOURCE database.sql;
    ```
 
-3. **Abre el proyecto**
-   - Haz doble clic en `index.html`, o
-   - Abre el archivo con tu navegador favorito
+## 📝 Contenido del Taller
 
-¡Eso es todo! No necesitas instalar nada más.
+### Tablas Creadas
+- **pais**: `id_pais`, `codigo_pais`, `nombre`, `continente`, `poblacion`
+- **cliente**: `id_cliente`, `id_pais`, `nombre`, `apellidos`, `direccion`, `telefono`, `email`
 
-## ✨ Personalización
+### Consultas Incluidas
+- ✅ **INNER JOIN**: Unión entre tablas pais y cliente
+- ✅ **GROUP BY**: Agrupación de clientes por país
+- ✅ **COUNT()**: Conteo de registros
+- ✅ **AVG()**: Promedio de datos
+- ✅ **WHERE**: Filtros por condiciones
 
-Para modificar el proyecto:
+### Procedimientos Almacenados
+- `actualizar_clientes()`: Convierte nombres y apellidos a mayúsculas
+- `actualizar_correos()`: Convierte emails a mayúsculas
 
-- **Contenido**: Edita `index.html` para cambiar textos y estructura
-- **Estilos**: Modifica `css/styles.css` para cambiar colores y diseño
-- **Funcionalidad**: Actualiza `js/functions.js` para añadir nuevas funciones
-- **Imágenes**: Reemplaza archivos en la carpeta `assets/images/`
+## 🔍 Ejemplos de Consultas
 
-## 🌐 Opciones de Hosting Gratuito
+**Contar clientes por país:**
+```sql
+SELECT p.nombre as pais, COUNT(c.id_cliente) as cantidad_clientes
+FROM pais p
+INNER JOIN cliente c ON p.id_pais = c.id_pais
+GROUP BY p.nombre;
+```
 
-Publica tu proyecto fácilmente:
+**Clientes en Colombia:**
+```sql
+SELECT COUNT(*) as cantidad_clientes
+FROM pais p
+INNER JOIN cliente c ON p.id_pais = c.id_pais
+WHERE p.nombre = 'Colombia';
+```
 
-- **GitHub Pages**: Actívalo en la configuración de tu repositorio
-- **Netlify**: Arrastra tu carpeta al sitio web de Netlify
-- **Vercel**: Conecta tu repositorio de GitHub automáticamente
+## ⚙️ Personalización
+
+Para extender el proyecto:
+
+- **Añadir países**: Inserta nuevos registros en la tabla `pais`
+- **Más clientes**: Agrega clientes con diferentes `id_pais`
+- **Nuevas consultas**: Experimenta con `SUM()`, `MAX()`, `MIN()`
+- **Procedimientos**: Crea funciones para validaciones automáticas
+
+## 🎯 Objetivos de Aprendizaje
+
+- Crear y relacionar tablas con Foreign Keys
+- Dominar consultas JOIN entre múltiples tablas
+- Usar funciones de agregación (COUNT, AVG, SUM)
+- Implementar procedimientos almacenados
+- Manejar datos de ejemplo realistas
 
 ## 💡 Consejos para Principiantes
 
-- **Practica regularmente**: Dedica al menos 30 minutos diarios
-- **Experimenta**: Cambia valores y observa qué sucede
-- **Usa herramientas**: Aprovecha las DevTools del navegador (F12)
-- **Busca ayuda**: La comunidad de JavaScript es muy colaborativa
+- **Practica paso a paso**: Ejecuta cada consulta individualmente
+- **Usa DESCRIBE**: `DESCRIBE tabla` para ver la estructura
+- **Experimenta**: Modifica las consultas para ver diferentes resultados
+- **Documenta**: Comenta tus consultas para recordar su propósito
 
 ## 📚 Recursos de Aprendizaje
 
-- [MDN Web Docs](https://developer.mozilla.org/es/) - Documentación completa
-- [freeCodeCamp](https://www.freecodecamp.org/) - Cursos gratuitos
-- [JavaScript.info](https://javascript.info/) - Tutoriales detallados
+- [MySQL Documentation](https://dev.mysql.com/doc/) - Documentación oficial
+- [W3Schools SQL](https://www.w3schools.com/sql/) - Tutoriales básicos
+- [SQLBolt](https://sqlbolt.com/) - Ejercicios interactivos
+- [DB Fiddle](https://www.db-fiddle.com/) - Prueba consultas online
 
 ## 🤝 Contribuir
 
-¡Las contribuciones son bienvenidas! Si encuentras errores o tienes ideas:
+¡Las contribuciones son bienvenidas! Puedes:
 
-1. Haz fork del proyecto
-2. Crea una rama nueva (`git checkout -b feature/nueva-funcion`)
-3. Confirma tus cambios (`git commit -m 'Añadir nueva función'`)
-4. Sube los cambios (`git push origin feature/nueva-funcion`)
-5. Abre un Pull Request
+1. Añadir más países y clientes
+2. Crear consultas más complejas
+3. Implementar nuevos procedimientos
+4. Mejorar la documentación
 
 ## 📄 Licencia
 
@@ -87,6 +128,6 @@ Este proyecto está bajo la Licencia MIT - mira el archivo [LICENSE](LICENSE) pa
 
 ---
 
-⭐ **¡No olvides dar una estrella al repo si te resultó útil!**
+⭐ **¡Perfecto para aprender SQL desde cero hasta nivel intermedio!**
 
-**Desarrollado con ❤️ para la comunidad de aprendizaje**
+**Desarrollado con 💾 para estudiantes de bases de datos**
